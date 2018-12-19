@@ -1,0 +1,16 @@
+{
+  "name": "whatsapp-messages",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/NoriSte/whatsapp-messages.git",
+  "author": "Stefano Magni <nori.ste.magni@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "jest": "^23.6.0",
+    "pptr-testing-library": "^0.3.1",
+    "puppeteer": "^1.11.0"
+  }
+}
