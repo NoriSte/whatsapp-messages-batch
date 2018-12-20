@@ -6,7 +6,7 @@
   "author": "Stefano Magni <nori.ste.magni@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "test": "jest"
+    "start": "jest"
   },
   "dependencies": {
     "jest": "^23.6.0",

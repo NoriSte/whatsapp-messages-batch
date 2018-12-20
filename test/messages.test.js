@@ -1,9 +1,11 @@
 /*
 funziona anche con contatti con i quali non si ha mai chattato
 in caso di ritorni a capo il messaggio verrà splittato
+si può usarlo in modalità safe
+è per italiano
 */
 
-const TEST_SAFELY = false;
+const TEST_SAFELY = true;
 
 const puppeteer = require("puppeteer");
 require("pptr-testing-library/extend");
@@ -15,46 +17,29 @@ const config = {
 };
 
 let messages = [
-  [
-    "Antonio Riva",
-    `Riceverai un pò di messaggi automatici da parte mia Ravio, non ti preoccupare e ignora questi messaggi, poi ti spiegherò 😁`
-  ],
+  ["Antonio Riva", `Buon Natale caro! 🎄`],
   [
     "Valentina Menaballi",
-    `[TEST] Ciao amore!!
-
-  questo è un messaggino inviato automaticamente 😁`
+    `Buon Natale!!
+    Ti piacciono questi auguri inviati in automatico??
+    😊😇🎄`
   ],
-  ["Mirko Bonasoooooooooo", 'Auguri inviati in "automatico" ☑️'],
-  ["Mirko Bonasorte", 'Auguri inviati in "automatico" ☑️'],
-  ["Matteo Miccoli", `Messaggio di prova`]
-  // [
-  //   "Matteo Miccoli",
-  //   `Messaggio di prova
-  // su
-  // più
-  // righe
-  // con
-  // faccine 😇`
-  // ]
+  ["Steve Jobs", "🙁"],
+  ["Matteo Miccoli", `Ormai di sarai abituato a ricevere messaggi di test 😁`]
 ];
 
 const lineBreakRegex = /(?:\r\n|\r|\n)/g;
-// to remove line breaks...
-// messages = messages.map(([user, message]) => [user, message.replace(lineBreakRegex, " ")]);
 
 beforeAll(async () => {
   browser = await puppeteer.launch({
     headless: false,
     userDataDir: ".tmp"
-    // executablePath: "/Applications/Google Chrome.app"
   });
   page = await browser.newPage();
 });
 afterAll(async () => {
-  // TODO: decomment them
-  // await page.close();
-  // await browser.close();
+  await page.close();
+  await browser.close();
 });
 
 const clearInput = async selector =>
