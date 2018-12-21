@@ -1,39 +1,14 @@
-/*
-funziona anche con contatti con i quali non si ha mai chattato
-in caso di ritorni a capo il messaggio verrà splittato
-si può usarlo in modalità safe
-è per italiano
-funziona anche per i gruppi
-logga quelli non inviati
-*/
-
-const TEST_SAFELY = false;
-const CHECK_DELAY = 1500;
+const config = require("../config.json");
+const { messages } = require("../messages");
 
 const puppeteer = require("puppeteer");
 let browser;
 let page;
-
-const config = {
-  findInputTitle: "Cerca o inizia una nuova chat"
-};
-
-let messages = [
-  ["Clark Kent", `Happy Xmas!! 🎄`],
-  ["James Bond", `No one is going to know your phone number, don't worry!`],
-  [
-    "Soccer group",
-    `Wishes to you all!
-    Are you busy tonight?
-    Match+beer??`
-  ]
-];
-
 const lineBreakRegex = /(?:\r\n|\r|\n)/g;
 
 beforeAll(async () => {
   browser = await puppeteer.launch({
-    headless: false,
+    headless: false, // set it to true at your own risk and remember that the first time you need to authorize WhatsApp scanning the QR code
     userDataDir: ".tmp"
   });
   page = await browser.newPage();
@@ -53,14 +28,6 @@ describe(`Whatsapp messages`, () => {
     await page.goto(`https://web.whatsapp.com`);
     await page.waitForSelector(`input[title="${config.findInputTitle}"]`, { timeout: 0 });
   }, 60000);
-  afterAll(() => {
-    if (unsentMessages.length) {
-      console.log("All messages are beeen sent but the followings");
-      console.log(unsentMessages);
-    } else {
-      console.log("All the messages are beeen sent 😊");
-    }
-  });
 
   describe.each(messages)("Message to %s", (user, message) => {
     let userExist = false;
@@ -88,7 +55,7 @@ describe(`Whatsapp messages`, () => {
 
     // every line break corresponds to a "ENTER" key press so a multiline message can't be tested without sending it
     let testFun = test;
-    if (TEST_SAFELY && lineBreakRegex.exec(message)) {
+    if (config.TEST_SAFELY && lineBreakRegex.exec(message)) {
       test(`The message contains line breaks, a test against it will send part of the message itself so the next test will be skipped`, () => {});
       testFun = test.skip;
     }
@@ -102,7 +69,7 @@ describe(`Whatsapp messages`, () => {
       30000
     );
 
-    (TEST_SAFELY ? test.skip : test)(
+    (config.TEST_SAFELY ? test.skip : test)(
       `Sends the message`,
       async () => {
         expect(userExist).toBeTruthy();
@@ -110,10 +77,19 @@ describe(`Whatsapp messages`, () => {
 
         await page.evaluate(
           CHECK_DELAY => new Promise(resolve => setTimeout(resolve, CHECK_DELAY)),
-          CHECK_DELAY
+          config.CHECK_DELAY
         );
       },
       5000
     );
+  });
+
+  afterAll(() => {
+    if (unsentMessages.length) {
+      console.log("All messages are beeen sent but the followings");
+      console.log(unsentMessages);
+    } else {
+      console.log("All the messages are beeen sent 😊");
+    }
   });
 });
