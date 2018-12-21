@@ -38,7 +38,7 @@ Obviously...
 
 ### Does it work for groups too?
 
-Yep
+Yep.
 
 ### Can I test your script before sending all the messages?
 
@@ -50,15 +50,15 @@ Nothing happens, the script needs to match exactly the contact name, otherwise i
 
 ### And how can I fix it?
 
-Don't worry, every unsent message is console.logged
+Don't worry, every unsent message is console.logged.
 
 ### What can I set?
 
-Look at the `config.js` file
+Look at the `config.js` file.
 
 ### How can I set the messages to send?
 
-Look at the `messages.js` file
+Look at the `messages.js` file.
 
 ### How can I send them?
 
