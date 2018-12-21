@@ -4,6 +4,7 @@ in caso di ritorni a capo il messaggio verrà splittato
 si può usarlo in modalità safe
 è per italiano
 funziona anche per i gruppi
+logga quelli non inviati
 */
 
 const TEST_SAFELY = false;
@@ -20,6 +21,7 @@ const config = {
 
 let messages = [
   ["Clark Kent", `Happy Xmas!! 🎄`],
+  ["Matteo Miccoli", `😇`],
   ["James Bond", `No one is going to know your phone number, don't worry!`],
   [
     "Soccer group",
@@ -47,12 +49,24 @@ const clearInput = async selector =>
   page.evaluate(selector => (document.querySelector(selector).value = ""), selector);
 
 describe(`Whatsapp messages`, () => {
+  const unsentMessages = [];
+
   test(`You authorized Whatsapp Web`, async () => {
     await page.goto(`https://web.whatsapp.com`);
     await page.waitForSelector(`input[title="${config.findInputTitle}"]`, { timeout: 0 });
   }, 60000);
+  afterAll(() => {
+    if (unsentMessages.length) {
+      console.log("All messages are beeen sent but the followings");
+      console.log(unsentMessages);
+    } else {
+      console.log("All the messages are beeen sent 😊");
+    }
+  });
+
   describe.each(messages)("Message to %s", (user, message) => {
     let userExist = false;
+
     test(`The user exists`, async () => {
       // we first need to select the correct user
       const findUserSel = `input[title="${config.findInputTitle}"]`;
@@ -62,7 +76,9 @@ describe(`Whatsapp messages`, () => {
       await page.type(findUserSel, user, { delay: 0 });
       // both already-chatted and never-chatted users will be found
       const userListItemSel = `span[title="${user}"]`;
+      unsentMessages.push([user, message]);
       await page.waitForSelector(userListItemSel, { timeout: 3000 });
+      unsentMessages.pop();
       userExist = true;
 
       // clicks it to open the corresponding chat
