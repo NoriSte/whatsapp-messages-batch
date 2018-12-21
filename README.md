@@ -5,6 +5,7 @@
 Before starting:
 
 - open `messages.js`
+- `$ yarn start` to send the messages
 - you can test my script without really sending messages, set `TEST_SAFELY` in `config.js` to true
 - open `config.js` and set the `findInputTitle` string, it's the content of the "Search or start a new chat input field"
   ![Alt text](input.jpg?raw=true "Input field")
@@ -17,13 +18,13 @@ Because I love to send Xmas greetings but on Dec 25th I can't spend an hour writ
 
 ### ... So?
 
-So I write all the messages in advance and on Dec 25th I launch this script.
+So I write all the messages in advance and on Dec 25th I'm going to launch this script.
 
 ### How it works?
 
 It uses [Puppeteer](https://github.com/GoogleChrome/puppeteer) to open up the WhatsApp web UI and write/send the messages for you.
 
-### Nice, should I already chatted with the desired contact?
+### Nice, should I already chatted with the contacts I'd like to send messages?
 
 No, it works also with contacts you never chatted with.
 
@@ -58,3 +59,7 @@ Look at the `config.js` file
 ### How can I set the messages to send?
 
 Look at the `messages.js` file
+
+### How can I send them?
+
+`$ yarn start`
