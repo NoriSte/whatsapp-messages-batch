@@ -50,9 +50,9 @@ Nothing happens, the script needs to match exactly the contact name, otherwise i
 
 ### And how can I fix it?
 
-Don't worry, every unsent message is console.logged.
+Don't worry, every unsent message is console.logged
 
-### What can I set?
+### What can I configure?
 
 Look at the `config.js` file.
 
