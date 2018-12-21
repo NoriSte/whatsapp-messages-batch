@@ -3,9 +3,11 @@ funziona anche con contatti con i quali non si ha mai chattato
 in caso di ritorni a capo il messaggio verrà splittato
 si può usarlo in modalità safe
 è per italiano
+funziona anche per i gruppi
 */
 
-const TEST_SAFELY = true;
+const TEST_SAFELY = false;
+const CHECK_DELAY = 1500;
 
 const puppeteer = require("puppeteer");
 require("pptr-testing-library/extend");
@@ -17,15 +19,14 @@ const config = {
 };
 
 let messages = [
-  ["Antonio Riva", `Buon Natale caro! 🎄`],
+  ["Clark Kent", `Happy Xmas!! 🎄`],
+  ["James Bond", `No one is going to know your phone number, don't worry!`],
   [
-    "Valentina Menaballi",
-    `Buon Natale!!
-    Ti piacciono questi auguri inviati in automatico??
-    😊😇🎄`
-  ],
-  ["Steve Jobs", "🙁"],
-  ["Matteo Miccoli", `Ormai di sarai abituato a ricevere messaggi di test 😁`]
+    "Soccer group",
+    `Wishes to you all!
+    Are you busy tonight?
+    Match+beer??`
+  ]
 ];
 
 const lineBreakRegex = /(?:\r\n|\r|\n)/g;
@@ -58,17 +59,18 @@ describe(`Whatsapp messages`, () => {
       await page.focus(findUserSel);
       // the input will be cleared before searching
       await clearInput(findUserSel);
-      await page.type(findUserSel, user);
+      await page.type(findUserSel, user, { delay: 0 });
       // both already-chatted and never-chatted users will be found
       const userListItemSel = `span[title="${user}"]`;
-      await page.waitForSelector(userListItemSel, { timeout: 2000 });
+      await page.waitForSelector(userListItemSel, { timeout: 3000 });
       userExist = true;
+
       // clicks it to open the corresponding chat
       await page.click(userListItemSel);
 
       // a delay to let the chat user panel load
       await page.evaluate(() => new Promise(resolve => setTimeout(resolve, 500)));
-    }, 5000);
+    }, 10000);
 
     // every line break corresponds to a "ENTER" key press so a multiline message can't be tested without sending it
     let testFun = test;
@@ -81,9 +83,9 @@ describe(`Whatsapp messages`, () => {
       `Writes the message`,
       async () => {
         expect(userExist).toBeTruthy();
-        await page.keyboard.type(message);
+        await page.keyboard.type(message, { delay: 0 });
       },
-      5000
+      30000
     );
 
     (TEST_SAFELY ? test.skip : test)(
@@ -91,6 +93,11 @@ describe(`Whatsapp messages`, () => {
       async () => {
         expect(userExist).toBeTruthy();
         await page.keyboard.press("Enter");
+
+        await page.evaluate(
+          CHECK_DELAY => new Promise(resolve => setTimeout(resolve, CHECK_DELAY)),
+          CHECK_DELAY
+        );
       },
       5000
     );
