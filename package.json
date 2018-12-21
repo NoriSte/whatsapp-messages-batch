@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "jest": "^23.6.0",
-    "pptr-testing-library": "^0.3.1",
     "puppeteer": "^1.11.0"
   }
 }

@@ -11,7 +11,6 @@ const TEST_SAFELY = false;
 const CHECK_DELAY = 1500;
 
 const puppeteer = require("puppeteer");
-require("pptr-testing-library/extend");
 let browser;
 let page;
 
@@ -21,7 +20,6 @@ const config = {
 
 let messages = [
   ["Clark Kent", `Happy Xmas!! 🎄`],
-  ["Matteo Miccoli", `😇`],
   ["James Bond", `No one is going to know your phone number, don't worry!`],
   [
     "Soccer group",
