@@ -2,6 +2,8 @@
 
 # Write your messages in advance and batch 'em all
 
+disclaimer: I've just used it for a hundred Xmas greetings and everything worked well 😊
+
 Before starting:
 
 - open `messages.js`
