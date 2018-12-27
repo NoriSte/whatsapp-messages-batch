@@ -20,8 +20,6 @@ Before starting:
 - open `config.js` and set the `findInputTitle` string, it's the content of the "Search or start a new chat input field"
   ![Alt text](input.jpg?raw=true "Input field")
 
-A [video](https://youtu.be/9BCdhoFPfjE) showing it running.
-
 # FAQ
 
 ### Why did you create it?
