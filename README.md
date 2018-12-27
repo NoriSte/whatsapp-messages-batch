@@ -2,7 +2,15 @@
 
 # Write your messages in advance and batch 'em all
 
-disclaimer: I've just used it for a hundred Xmas greetings and everything worked well 😊
+- [x] groups support
+- [x] emojis support
+- [x] naver-chatted contacts support
+- [x] multiline messages support
+- [x] test it without send any message
+- [x] summary of unsent messages
+
+
+disclaimer: I've used it for a hundred Xmas greetings and everything worked well 😊
 
 Before starting:
 
@@ -51,6 +59,10 @@ Yep, open `config.js` and set `TEST_SAFELY` to `true`
 ### What happens if mystiped the name of a contact?
 
 Nothing happens, the script needs to match exactly the contact name, otherwise it does nothing.
+
+### Why it doesn't find the contact to chat with?
+
+Because it's case and emoji sensitive, the contact name must 100% match the correct one.
 
 ### And how can I fix it?
 
